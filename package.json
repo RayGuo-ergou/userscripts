@@ -1,0 +1,27 @@
+{
+  "name": "userscripts",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "npm run prepare:config && tsup",
+    "dev": "concurrently \"npm run watch\" \"npm run serve\"",
+    "watch": "tsup --watch",
+    "serve": "serve ./dist",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prepare:config": "ts-node-esm ./src/utility/createConfig.ts"
+  },
+  "devDependencies": {
+    "@types/greasemonkey": "^4.0.7",
+    "@types/node": "^20.9.1",
+    "@types/tampermonkey": "^5.0.2",
+    "chalk": "^5.3.0",
+    "concurrently": "^8.2.2",
+    "js-toml": "^1.0.0",
+    "serve": "^14.2.1",
+    "ts-node": "^10.9.1",
+    "tsup": "^7.3.0",
+    "typescript": "^5.2.2"
+  }
+}
