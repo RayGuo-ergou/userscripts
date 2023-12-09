@@ -2,7 +2,11 @@
   "name": "userscripts",
   "type": "module",
   "version": "1.0.0",
-  "private": true,
+  "author": {
+    "name": "Ray Guo",
+    "email": "ma2808203259@hotmail.com"
+  },
+  "license": "MIT",
   "scripts": {
     "build": "npm run prepare:config && tsup",
     "dev": "concurrently \"npm run watch\" \"npm run serve\"",

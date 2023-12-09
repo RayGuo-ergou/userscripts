@@ -86,7 +86,21 @@ export default defineConfig({
       writeFileSync(
         `dist/${script}.user.js`,
         `// ==UserScript==\n${config
-          .map(([k, v]) => `// @${k} ${v}`)
+          .map(([k, v]) => {
+            if (k === 'matches') {
+              const matches = v.split(',').map((i) => i.trim())
+              if (matches.length === 0) {
+                return ''
+              }
+              let matchText = ''
+              matches.forEach((match) => {
+                matchText += `// @match ${match}\n`
+              })
+              return matchText
+            } else {
+              return `// @${k} ${v}`
+            }
+          })
           .join('\n')}\n// ==/UserScript==\n\n${readFileSync(
           `dist/${script}.user.js`,
           'utf-8',
