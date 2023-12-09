@@ -17,6 +17,11 @@ const getTomlString = (data: Partial<Tampermonkey.ScriptMetadata>) => {
 }
 
 const createConfigs = () => {
+  // createToml for base config
+  const baseSource = join(cwd(), '/src/config.base.ts')
+  const baseTarget = join(cwd(), '/src/config.base.toml')
+  createToml(baseSource, baseTarget)
+
   folders.forEach((folder) => {
     const source = join(cwd(), `/src/${folder}/config.ts`)
     const target = join(cwd(), `/src/${folder}/config.toml`)
