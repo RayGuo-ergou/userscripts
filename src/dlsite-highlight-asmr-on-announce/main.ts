@@ -7,7 +7,7 @@
  */
 import { findElementsByXPath } from '../utility/document'
 
-const xpath = "//*[contains(text(), 'ボイス・ASMR')]"
+const xpath = '//*[contains(text(), \'ボイス・ASMR\')]'
 // Find elements using XPath
 const elements = findElementsByXPath(xpath)
 
@@ -15,9 +15,8 @@ const elements = findElementsByXPath(xpath)
 elements.forEach((el) => {
   // Traverse up the DOM tree to find the parent with class 'n_worklist_item'
   let parent = el.parentElement
-  while (parent && !parent.classList.contains('n_worklist_item')) {
+  while (parent && !parent.classList.contains('n_worklist_item'))
     parent = parent.parentElement
-  }
 
   // If a matching parent is found, add a border to it
   if (parent) {

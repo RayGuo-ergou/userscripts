@@ -1,7 +1,4 @@
-export const findElementsByXPath = (
-  xpath: string,
-  contextNode: Node = document,
-) => {
+export function findElementsByXPath(xpath: string, contextNode: Node = document) {
   const result = document.evaluate(
     xpath,
     contextNode,
@@ -9,10 +6,13 @@ export const findElementsByXPath = (
     XPathResult.ANY_TYPE,
     null,
   )
-  const nodes: Node[] = []
-  let node: Node | null
-  while ((node = result.iterateNext())) {
+  const nodes = []
+  let node = result.iterateNext()
+
+  while (node) {
     nodes.push(node)
+    node = result.iterateNext()
   }
+
   return nodes
 }

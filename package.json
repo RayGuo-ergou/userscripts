@@ -17,11 +17,13 @@
     "prepare:config": "ts-node-esm ./src/utility/createConfig.ts"
   },
   "devDependencies": {
+    "@ergou_rrrr/eslint-config": "^0.0.7",
     "@types/greasemonkey": "^4.0.7",
     "@types/node": "^20.9.1",
     "@types/tampermonkey": "^5.0.2",
     "chalk": "^5.3.0",
     "concurrently": "^8.2.2",
+    "eslint": "^8.55.0",
     "js-toml": "^1.0.0",
     "serve": "^14.2.1",
     "ts-node": "^10.9.1",

@@ -1,4 +1,4 @@
-import { readdirSync, statSync, existsSync } from 'node:fs'
+import { existsSync, readdirSync, statSync } from 'node:fs'
 
 const folders = readdirSync('src').filter((file) => {
   const stat = statSync(`src/${file}`)

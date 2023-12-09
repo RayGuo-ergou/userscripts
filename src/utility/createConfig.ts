@@ -1,14 +1,14 @@
-import folders from './folder.js'
 import { writeFileSync } from 'node:fs'
 import { cwd } from 'node:process'
 import { join } from 'node:path'
+import folders from './folder.js'
 
-const createToml = async (source: string, target: string) => {
+async function createToml(source: string, target: string) {
   const { default: data } = await import(source)
   writeFileSync(target, getTomlString(data))
 }
 
-const getTomlString = (data: Partial<Tampermonkey.ScriptMetadata>) => {
+function getTomlString(data: Partial<Tampermonkey.ScriptMetadata>) {
   let tomlString = ''
   Object.entries(data).forEach(([k, v]) => {
     tomlString += `${k} = "${v}"\n`
@@ -16,7 +16,7 @@ const getTomlString = (data: Partial<Tampermonkey.ScriptMetadata>) => {
   return tomlString
 }
 
-const createConfigs = () => {
+function createConfigs() {
   // createToml for base config
   const baseSource = join(cwd(), '/src/config.base.ts')
   const baseTarget = join(cwd(), '/src/config.base.toml')

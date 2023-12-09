@@ -1,8 +1,5 @@
 import {
-  existsSync,
   readFileSync,
-  readdirSync,
-  statSync,
   writeFileSync,
 } from 'node:fs'
 import { defineConfig } from 'tsup'
@@ -11,6 +8,7 @@ import chalk from 'chalk'
 import scripts from './src/utility/folder'
 
 function log(...args: any[]) {
+  // eslint-disable-next-line no-console
   console.log(chalk.hex('#f4b8e4')('BUILD'), ...args)
 }
 
@@ -28,17 +26,20 @@ function convertConfig(configPath: string): {
         list.push([k, i])
         map.set(k, i)
       })
-    } else if (typeof v === 'object') {
+    }
+    else if (typeof v === 'object') {
       Object.entries<string>(v).forEach(([subK, v]) => {
         if (subK === 'default') {
           list.push([k, v])
           map.set(k, v)
-        } else {
+        }
+        else {
           list.push([`${k}:${subK}`, v])
           map.set(`${k}:${subK}`, v)
         }
       })
-    } else {
+    }
+    else {
       list.push([k, v])
       map.set(k, v)
     }
@@ -58,11 +59,11 @@ const HIGH_PRIORITY_CONFIG_KEYS = [
 ]
 
 log(`scripts to build:`)
-scripts.forEach((script) => log(`- ${script}`))
+scripts.forEach(script => log(`- ${script}`))
 
 export default defineConfig({
   entry: Object.fromEntries(
-    scripts.map((script) => [script, `src/${script}/main.ts`]),
+    scripts.map(script => [script, `src/${script}/main.ts`]),
   ),
   format: ['iife'],
   clean: true,
@@ -70,34 +71,35 @@ export default defineConfig({
   async onSuccess() {
     const { list: baseConfig } = convertConfig('src/config.base.toml')
     scripts.forEach(async (script) => {
-      const { list: scriptConfig, map } = convertConfig(
+      const { list: scriptConfig } = convertConfig(
         `src/${script}/config.toml`,
       )
 
       const allConfig = baseConfig.concat(scriptConfig)
-      const config = HIGH_PRIORITY_CONFIG_KEYS.map((key) =>
+      const config = HIGH_PRIORITY_CONFIG_KEYS.map(key =>
         allConfig.find(([k]) => k === key),
       )
         .concat(
           allConfig.filter(([k]) => !HIGH_PRIORITY_CONFIG_KEYS.includes(k)),
         )
-        .filter((i) => i !== undefined) as [string, string][]
+        .filter(i => i !== undefined) as [string, string][]
 
       writeFileSync(
         `dist/${script}.user.js`,
         `// ==UserScript==\n${config
           .map(([k, v]) => {
             if (k === 'matches') {
-              const matches = v.split(',').map((i) => i.trim())
-              if (matches.length === 0) {
+              const matches = v.split(',').map(i => i.trim())
+              if (matches.length === 0)
                 return ''
-              }
+
               let matchText = ''
               matches.forEach((match) => {
                 matchText += `// @match ${match}\n`
               })
               return matchText
-            } else {
+            }
+            else {
               return `// @${k} ${v}`
             }
           })
