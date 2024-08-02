@@ -90,8 +90,9 @@ export default defineConfig({
           .map(([k, v]) => {
             if (k === 'matches') {
               const matches = v.split(',').map(i => i.trim())
-              if (matches.length === 0)
+              if (matches.length === 0) {
                 return ''
+              }
 
               let matchText = ''
               matches.forEach((match) => {

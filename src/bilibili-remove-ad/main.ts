@@ -1,12 +1,14 @@
 function removeAds() {
   const ad = document.querySelector('.ad-report')
-  if (ad)
+  if (ad) {
     ad.remove()
+  }
 
   // Find all elements with the ad class
   const ads = document.querySelectorAll('.bili-video-card__info--ad')
-  if (ads.length === 0)
+  if (ads.length === 0) {
     return
+  }
 
   // Loop through each ad and remove its highest-level parent
   ads.forEach((ad) => {
@@ -16,12 +18,14 @@ function removeAds() {
       currentElement
       && !currentElement.classList.contains('feed-card')
       && !currentElement.classList.contains('bili-video-card')
-    )
+    ) {
       currentElement = currentElement.parentElement
+    }
 
     // Remove the parent element
-    if (currentElement)
+    if (currentElement) {
       currentElement.remove()
+    }
   })
 }
 
