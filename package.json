@@ -9,8 +9,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "npm run prepare:config && tsup",
-    "dev": "concurrently \"npm run watch\" \"npm run serve\"",
+    "build": "pnpm run prepare:config && tsup",
+    "dev": "pnpm run watch & pnpm run serve",
     "watch": "tsup --watch",
     "serve": "serve ./dist",
     "lint": "eslint .",
@@ -23,7 +23,6 @@
     "@types/node": "^22.1.0",
     "@types/tampermonkey": "^5.0.3",
     "chalk": "^5.3.0",
-    "concurrently": "^8.2.2",
     "eslint": "^9.8.0",
     "js-toml": "^1.0.0",
     "serve": "^14.2.3",
