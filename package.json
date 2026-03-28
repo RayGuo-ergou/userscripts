@@ -9,13 +9,12 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "pnpm run prepare:config && tsup",
+    "build": "tsup",
     "dev": "pnpm run watch & pnpm run serve",
     "watch": "tsup --watch",
     "serve": "serve ./dist",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "prepare:config": "tsx ./src/utility/createConfig.ts"
+    "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
     "@ergou_rrrr/eslint-config": "^1.0.19",
@@ -24,7 +23,6 @@
     "@types/tampermonkey": "^5.0.4",
     "chalk": "^5.4.1",
     "eslint": "^9.28.0",
-    "js-toml": "^1.0.1",
     "serve": "^14.2.4",
     "tsup": "^8.5.0",
     "tsx": "^4.20.1",

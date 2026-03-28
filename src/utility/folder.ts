@@ -2,7 +2,7 @@ import { existsSync, readdirSync, statSync } from 'node:fs'
 
 const folders = readdirSync('src').filter((file) => {
   const stat = statSync(`src/${file}`)
-  return stat.isDirectory() && existsSync(`src/${file}/config.toml`)
+  return stat.isDirectory() && existsSync(`src/${file}/config.ts`)
 })
 
 export default folders
