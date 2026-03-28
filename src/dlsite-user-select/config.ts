@@ -1,0 +1,8 @@
+const config: Partial<Tampermonkey.ScriptMetadata> = {
+  name: 'DLSite User Select Auto',
+  description: 'Enable user-select: auto and touch-action: auto on play.dlsite.com',
+  version: '1.0.0',
+  matches: ['https://play.dlsite.com/*'],
+}
+
+export default config
