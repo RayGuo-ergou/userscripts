@@ -1,3 +1,4 @@
-import ray from '@ergou_rrrr/eslint-config'
+// eslint.config.mjs
+import antfu from '@antfu/eslint-config'
 
-export default ray
+export default antfu()

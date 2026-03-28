@@ -8,11 +8,9 @@
 
 // ==/UserScript==
 
-"use strict";
-(() => {
-  // src/dlsite-user-select/main.ts
-  var Css = String.raw;
-  var userSelectStyle = Css`
+(function() {
+	//#region src/dlsite-user-select/main.ts
+	const userSelectStyle = String.raw`
 * {
   user-select: auto !important;
   -webkit-user-select: auto !important;
@@ -22,8 +20,9 @@
   -webkit-touch-callout: default !important;
 }
 `;
-  var styleTag = document.createElement("style");
-  styleTag.textContent = userSelectStyle;
-  styleTag.id = "dlsite-user-select";
-  document.head.appendChild(styleTag);
+	const styleTag = document.createElement("style");
+	styleTag.textContent = userSelectStyle;
+	styleTag.id = "dlsite-user-select";
+	document.head.appendChild(styleTag);
+	//#endregion
 })();

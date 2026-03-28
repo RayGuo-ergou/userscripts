@@ -9,22 +9,22 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsup",
+    "build": "tsdown",
     "dev": "pnpm run watch & pnpm run serve",
-    "watch": "tsup --watch",
+    "watch": "tsdown --watch",
     "serve": "serve ./dist",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
-    "@ergou_rrrr/eslint-config": "^1.0.19",
+    "@antfu/eslint-config": "^7.7.3",
     "@types/greasemonkey": "^4.0.7",
     "@types/node": "^22.15.31",
     "@types/tampermonkey": "^5.0.4",
     "chalk": "^5.4.1",
-    "eslint": "^9.28.0",
+    "eslint": "^10.1.0",
     "serve": "^14.2.4",
-    "tsup": "^8.5.0",
+    "tsdown": "^0.21.6",
     "tsx": "^4.20.1",
     "typescript": "^5.8.3"
   }

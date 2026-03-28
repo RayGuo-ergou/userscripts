@@ -1,13 +1,10 @@
-import {
-  readFileSync,
-  writeFileSync,
-} from 'node:fs'
+import type { UserConfig } from 'tsdown'
+import { readFileSync, writeFileSync } from 'node:fs'
 import chalk from 'chalk'
-import { defineConfig } from 'tsup'
-import scripts from './src/utility/folder'
+import { defineConfig } from 'tsdown'
+import scripts from './src/utility/folder.ts'
 
 function log(...args: any[]) {
-  // eslint-disable-next-line no-console
   console.log(chalk.hex('#f4b8e4')('BUILD'), ...args)
 }
 
@@ -17,7 +14,6 @@ function convertConfig(data: Record<string, any>): {
 } {
   const list: [string, string][] = []
   const map = new Map<string, string>()
-
   Object.entries(data).forEach(([k, v]) => {
     if (Array.isArray(v)) {
       v.forEach((i) => {
@@ -42,7 +38,6 @@ function convertConfig(data: Record<string, any>): {
       map.set(k, v)
     }
   })
-
   return { list, map }
 }
 
@@ -59,18 +54,21 @@ const HIGH_PRIORITY_CONFIG_KEYS = [
 log(`scripts to build:`)
 scripts.forEach(script => log(`- ${script}`))
 
-export default defineConfig({
-  entry: Object.fromEntries(
-    scripts.map(script => [script, `src/${script}/main.ts`]),
-  ),
-  format: ['iife'],
-  clean: true,
-  outExtension: () => ({ js: '.user.js' }),
-  async onSuccess() {
-    const { default: baseConfigObj } = await import('./src/config.base')
-    const { list: baseConfig } = convertConfig(baseConfigObj)
+export default defineConfig(
+  scripts.map((script, index): UserConfig => ({
+    entry: { [script]: `src/${script}/main.ts` },
+    clean: index === 0,
+    outExtensions: () => ({ js: '.js' }),
+    outputOptions: {
+      entryFileNames: '[name].user.js',
+    },
+    format: 'iife' as const,
+    dts: false,
+    target: false as const,
+    async onSuccess() {
+      const { default: baseConfigObj } = await import('./src/config.base.ts')
+      const { list: baseConfig } = convertConfig(baseConfigObj)
 
-    for (const script of scripts) {
       const { default: scriptConfigObj } = await import(`./src/${script}/config.ts`)
       const { list: scriptConfig } = convertConfig(scriptConfigObj)
 
@@ -78,9 +76,7 @@ export default defineConfig({
       const config = HIGH_PRIORITY_CONFIG_KEYS.map(key =>
         allConfig.find(([k]) => k === key),
       )
-        .concat(
-          allConfig.filter(([k]) => !HIGH_PRIORITY_CONFIG_KEYS.includes(k)),
-        )
+        .concat(allConfig.filter(([k]) => !HIGH_PRIORITY_CONFIG_KEYS.includes(k)))
         .filter(i => i !== undefined) as [string, string][]
 
       writeFileSync(
@@ -89,25 +85,14 @@ export default defineConfig({
           .map(([k, v]) => {
             if (k === 'matches') {
               const matches = v.split(',').map(i => i.trim())
-              if (matches.length === 0) {
+              if (matches.length === 0)
                 return ''
-              }
-
-              let matchText = ''
-              matches.forEach((match) => {
-                matchText += `// @match ${match}\n`
-              })
-              return matchText
+              return `${matches.map(match => `// @match ${match}`).join('\n')}\n`
             }
-            else {
-              return `// @${k} ${v}`
-            }
+            return `// @${k} ${v}`
           })
-          .join('\n')}\n// ==/UserScript==\n\n${readFileSync(
-          `dist/${script}.user.js`,
-          'utf-8',
-        )}`,
+          .join('\n')}\n// ==/UserScript==\n\n${readFileSync(`dist/${script}.user.js`, 'utf-8')}`,
       )
-    }
-  },
-})
+    },
+  })),
+)

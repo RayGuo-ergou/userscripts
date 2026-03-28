@@ -8,18 +8,17 @@
 
 // ==/UserScript==
 
-"use strict";
-(() => {
-  // src/dlsite-highlight-asmr-on-announce/main.ts
-  var Css = String.raw;
-  var borderStyle = Css`
+(function() {
+	//#region src/dlsite-highlight-asmr-on-announce/main.ts
+	const borderStyle = String.raw`
 .n_worklist_item:has(.work_category.type_SOU){
   border: 2px solid #86198f !important;
   border-radius: 0.25rem !important;
 }
 `;
-  var styleTag = document.createElement("style");
-  styleTag.textContent = borderStyle;
-  styleTag.id = "dlsite-highlight-asmr-on-announce";
-  document.head.appendChild(styleTag);
+	const styleTag = document.createElement("style");
+	styleTag.textContent = borderStyle;
+	styleTag.id = "dlsite-highlight-asmr-on-announce";
+	document.head.appendChild(styleTag);
+	//#endregion
 })();
