@@ -20,6 +20,6 @@
 		script.setAttribute("src", url);
 		document.getElementsByTagName("head")[0].appendChild(script);
 	}
-	addScript(`http://localhost:3000/{filename}?t=${(/* @__PURE__ */ new Date()).getTime()}`);
+	addScript(`http://localhost:3000/{filename}?t=${+Date.now()}`);
 	//#endregion
 })();

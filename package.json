@@ -2,7 +2,7 @@
   "name": "userscripts",
   "type": "module",
   "version": "0.0.0",
-  "packageManager": "pnpm@10.12.1",
+  "packageManager": "pnpm@10.33.0",
   "author": {
     "name": "Ray Guo",
     "email": "ma2808203259@hotmail.com"
@@ -19,13 +19,13 @@
   "devDependencies": {
     "@antfu/eslint-config": "^7.7.3",
     "@types/greasemonkey": "^4.0.7",
-    "@types/node": "^22.15.31",
-    "@types/tampermonkey": "^5.0.4",
-    "chalk": "^5.4.1",
+    "@types/node": "^25.5.0",
+    "@types/tampermonkey": "^5.0.5",
+    "chalk": "^5.6.2",
     "eslint": "^10.1.0",
-    "serve": "^14.2.4",
+    "serve": "^14.2.6",
     "tsdown": "^0.21.6",
-    "tsx": "^4.20.1",
-    "typescript": "^5.8.3"
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
   }
 }
