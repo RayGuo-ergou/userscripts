@@ -7,12 +7,12 @@
 const Css = String.raw
 
 const userSelectStyle = Css`
-* {
+.app {
   user-select: auto !important;
   -webkit-user-select: auto !important;
   -moz-user-select: auto !important;
   -ms-user-select: auto !important;
-  touch-action: auto !important;
+  touch-action: manipulation !important;
   -webkit-touch-callout: default !important;
 }
 `
