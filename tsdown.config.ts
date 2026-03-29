@@ -8,37 +8,28 @@ function log(...args: any[]) {
   console.log(chalk.hex('#f4b8e4')('BUILD'), ...args)
 }
 
-function convertConfig(data: Record<string, any>): {
-  list: [string, string][]
-  map: Map<string, string>
-} {
-  const list: [string, string][] = []
-  const map = new Map<string, string>()
-  Object.entries(data).forEach(([k, v]) => {
-    if (Array.isArray(v)) {
-      v.forEach((i) => {
-        list.push([k, i])
-        map.set(k, i)
-      })
+function convertConfig(data: Partial<Tampermonkey.ScriptMetadata>): [string, string][] {
+  const entries: [string, string][] = []
+
+  for (const [key, value] of Object.entries(data)) {
+    if (Array.isArray(value)) {
+      for (const item of value) {
+        entries.push([key, String(item)])
+      }
     }
-    else if (typeof v === 'object' && v !== null) {
-      Object.entries<string>(v).forEach(([subK, v]) => {
-        if (subK === 'default') {
-          list.push([k, v])
-          map.set(k, v)
-        }
-        else {
-          list.push([`${k}:${subK}`, v])
-          map.set(`${k}:${subK}`, v)
-        }
-      })
+    // TODO: Likely not working correctly, fix later
+    else if (typeof value === 'object' && value !== null) {
+      for (const [subKey, subValue] of Object.entries(value)) {
+        const fullKey = subKey === 'default' ? key : `${key}:${subKey}`
+        entries.push([fullKey, String(subValue)])
+      }
     }
-    else {
-      list.push([k, v])
-      map.set(k, v)
+    else if (value !== undefined) {
+      entries.push([key, String(value)])
     }
-  })
-  return { list, map }
+  }
+
+  return entries
 }
 
 const HIGH_PRIORITY_CONFIG_KEYS = [
@@ -62,22 +53,22 @@ export default defineConfig(
     outputOptions: {
       entryFileNames: '[name].user.js',
     },
-    format: 'iife' as const,
+    format: 'iife',
     dts: false,
-    target: false as const,
+    target: false,
     async onSuccess() {
       const { default: baseConfigObj } = await import('./src/config.base.ts')
-      const { list: baseConfig } = convertConfig(baseConfigObj)
+      const baseConfig = convertConfig(baseConfigObj)
 
       const { default: scriptConfigObj } = await import(`./src/${script}/config.ts`)
-      const { list: scriptConfig } = convertConfig(scriptConfigObj)
+      const scriptConfig = convertConfig(scriptConfigObj)
+      console.log(scriptConfig)
 
       const allConfig = baseConfig.concat(scriptConfig)
-      const config = HIGH_PRIORITY_CONFIG_KEYS.map(key =>
-        allConfig.find(([k]) => k === key),
-      )
+      const config = HIGH_PRIORITY_CONFIG_KEYS
+        .map(key => allConfig.find(([k]) => k === key))
         .concat(allConfig.filter(([k]) => !HIGH_PRIORITY_CONFIG_KEYS.includes(k)))
-        .filter(i => i !== undefined) as [string, string][]
+        .filter((i): i is [string, string] => i !== undefined)
 
       writeFileSync(
         `dist/${script}.user.js`,
@@ -87,7 +78,7 @@ export default defineConfig(
               const matches = v.split(',').map(i => i.trim())
               if (matches.length === 0)
                 return ''
-              return `${matches.map(match => `// @match ${match}`).join('\n')}\n`
+              return `${matches.map(match => `// @match ${match}`).join('\n')}`
             }
             return `// @${k} ${v}`
           })

@@ -5,7 +5,6 @@
 // @description A collection of utilities for developers.
 // @author Ray Guo
 // @match *://*/*
-
 // ==/UserScript==
 
 (function() {

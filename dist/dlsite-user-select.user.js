@@ -5,7 +5,6 @@
 // @description Enable user-select: auto and touch-action: auto on play.dlsite.com
 // @author Ray Guo
 // @match https://play.dlsite.com/*
-
 // ==/UserScript==
 
 (function() {

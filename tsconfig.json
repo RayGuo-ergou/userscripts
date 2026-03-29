@@ -8,10 +8,13 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "types": [
-      "node"
+      "node",
+      "greasemonkey",
+      "tampermonkey"
     ],
     "allowImportingTsExtensions": true,
     "strict": true,
+    "noEmit": true,
     "esModuleInterop": true,
     "skipLibCheck": true
   },

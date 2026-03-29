@@ -5,7 +5,6 @@
 // @description To highlight ASMR on DLSite announce page
 // @author Ray Guo
 // @match https://www.dlsite.com/maniax/announce/list/*
-
 // ==/UserScript==
 
 (function() {
