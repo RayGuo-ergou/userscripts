@@ -62,7 +62,6 @@ export default defineConfig(
 
       const { default: scriptConfigObj } = await import(`./src/${script}/config.ts`)
       const scriptConfig = convertConfig(scriptConfigObj)
-      console.log(scriptConfig)
 
       const allConfig = baseConfig.concat(scriptConfig)
       const config = HIGH_PRIORITY_CONFIG_KEYS
