@@ -5,6 +5,7 @@
       "ESNext",
       "DOM"
     ],
+    "moduleDetection": "force",
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "types": [
