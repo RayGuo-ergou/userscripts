@@ -11,6 +11,7 @@ const borderStyle = Css`
 .n_worklist_item:has(.work_category.type_SOU){
   border: 2px solid #86198f !important;
   border-radius: 0.25rem !important;
+  order: -1;
 }
 `
 const styleTag = document.createElement('style')
